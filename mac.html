@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Automatisk Audible-eksport fra Macen – Bokhylla</title>
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="icon.png" alt="Bokhylla-ikonet">
+    <h1>Automatisk Audible-eksport fra Macen</h1>
+    <p class="tagline">Macen henter Audible-biblioteket ditt hver morgen, og Bokhylla på iPhonen finner det av seg selv.</p>
+  </header>
+
+  <div class="card">
+    <h2>Slik virker det</h2>
+    <p>Et lite skript på Macen kjører kl. 06 hver morgen. Det bruker det frie verktøyet
+      <a href="https://github.com/mkb79/audible-cli">audible-cli</a> til å eksportere Audible-biblioteket
+      og ønskelisten din til mappen <code>Bokhylla</code> i iCloud Drive. Bokhylla på iPhonen leser
+      mappen og oppdaterer biblioteket. Er Macen i dvale kl. 06, kjører skriptet når den våkner.</p>
+    <p class="muted">audible-cli er et uavhengig verktøy med åpen kildekode. Det er ikke laget av
+      Audible eller Amazon, og heller ikke av oss. Innloggingen din lagres bare på Macen din.</p>
+    <p>Vil du bare importere én gang? Da holder det å gjøre steg 1, kjøre
+      <code>audible library export --format tsv --output audible-library.tsv</code> og åpne filen i
+      Bokhylla under Innstillinger → Audible → «Importer fil …».</p>
+  </div>
+
+  <div class="card">
+    <h2>1. Installer audible-cli og logg inn</h2>
+    <p>Du trenger <a href="https://brew.sh">Homebrew</a>. Åpne Terminal og kjør:</p>
+<pre><code>brew install pipx
+pipx ensurepath
+pipx install audible-cli</code></pre>
+    <p>Lukk Terminal, åpne den igjen, og logg inn:</p>
+<pre><code>audible quickstart</code></pre>
+    <p>Følg spørsmålene. Velg landet til Audible-butikken du handler i (for eksempel <code>us</code> for
+      audible.com eller <code>uk</code> for audible.co.uk), og logg inn med Audible-kontoen din.</p>
+
+    <h2>2. Last ned eksportskriptet</h2>
+<pre><code>mkdir -p ~/bin
+curl -fsSL https://akselcb-sketch.github.io/bokhylla-site/mac/audible-export.sh -o ~/bin/audible-export.sh
+chmod +x ~/bin/audible-export.sh</code></pre>
+    <p class="muted">Vil du se hva skriptet gjør først? <a href="mac/audible-export.sh">Les audible-export.sh</a>.</p>
+
+    <h2>3. Sett opp den daglige kjøringen</h2>
+<pre><code>mkdir -p ~/Library/LaunchAgents
+curl -fsSL https://akselcb-sketch.github.io/bokhylla-site/mac/no.bokhylla.audible-export.plist -o ~/Library/LaunchAgents/no.bokhylla.audible-export.plist
+sed -i '' "s#REPLACE_WITH_YOUR_HOME#$HOME#g" ~/Library/LaunchAgents/no.bokhylla.audible-export.plist
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/no.bokhylla.audible-export.plist</code></pre>
+    <p class="muted">Den andre linjen henter <a href="mac/no.bokhylla.audible-export.plist">no.bokhylla.audible-export.plist</a>,
+      den tredje setter inn hjemmemappen din, den fjerde starter den daglige kjøringen.</p>
+
+    <h2>4. Test med det samme</h2>
+    <p>Du trenger ikke vente til i morgen:</p>
+<pre><code>launchctl kickstart gui/$(id -u)/no.bokhylla.audible-export</code></pre>
+    <p>Etter et halvt minutt eller så skal <code>audible-library.tsv</code> og
+      <code>audible-wishlist.tsv</code> ligge i iCloud Drive → Bokhylla. Sjekk loggen hvis de ikke gjør det:</p>
+<pre><code>tail -n 20 ~/Library/Logs/bokhylla-audible-export.log</code></pre>
+
+    <h2>5. Velg mappen i Bokhylla</h2>
+    <p>På iPhonen: Bokhylla → Innstillinger → Audible → «Velg mappe i iCloud Drive …», og velg mappen
+      <code>Bokhylla</code>. Fra nå av henter appen de nye filene av seg selv, og du kan alltid trykke
+      «Oppdater nå».</p>
+  </div>
+
+  <div class="card">
+    <h2>Feilsøking</h2>
+    <ul>
+      <li><strong>«FEILET» i loggen etter en stund:</strong> innloggingen mot Audible har som regel utløpt.
+        Kjør <code>audible quickstart</code> på nytt.</li>
+      <li><strong>Ingenting i loggen i det hele tatt:</strong> se launchd sin egen logg,
+        <code>~/Library/Logs/bokhylla-audible-export-launchd.log</code>.</li>
+      <li><strong>Finner ikke «audible»:</strong> sjekk at <code>audible --version</code> virker i et nytt
+        Terminal-vindu.</li>
+    </ul>
+
+    <h2>Avinstallere</h2>
+<pre><code>launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/no.bokhylla.audible-export.plist
+rm ~/Library/LaunchAgents/no.bokhylla.audible-export.plist ~/bin/audible-export.sh</code></pre>
+  </div>
+
+  <a class="back" href="support.html">← Hjelp og kontakt</a>
+  <footer>
+    Bokhylla utvikles av Helge Johannessen Bjørland.<br>
+    Bokhylla er ikke tilknyttet Audible, Amazon eller Goodreads.
+  </footer>
+</div>
+</body>
+</html>

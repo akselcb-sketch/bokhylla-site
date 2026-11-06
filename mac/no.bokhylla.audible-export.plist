@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+	FØR INSTALLASJON: bytt ut REPLACE_WITH_YOUR_HOME nedenfor (tre steder)
+	med din faktiske hjemmemappe, f.eks. /Users/navn. Se
+	https://akselcb-sketch.github.io/bokhylla-site/mac.html for
+	fremgangsmåte (echo $HOME + sed, eller manuell redigering).
+	Plist-filer støtter ikke «~», så stien må skrives ut i sin helhet.
+	-->
+	<key>Label</key>
+	<string>no.bokhylla.audible-export</string>
+
+	<key>ProgramArguments</key>
+	<array>
+		<string>/bin/bash</string>
+		<string>REPLACE_WITH_YOUR_HOME/bin/audible-export.sh</string>
+	</array>
+
+	<key>StartCalendarInterval</key>
+	<dict>
+		<key>Hour</key>
+		<integer>6</integer>
+		<key>Minute</key>
+		<integer>0</integer>
+	</dict>
+
+	<key>RunAtLoad</key>
+	<false/>
+
+	<key>ProcessType</key>
+	<string>Background</string>
+
+	<!--
+	Dette er launchd sin egen, grove logg (nyttig hvis scriptet ikke i det
+	hele tatt klarer å starte, f.eks. pga. rettigheter). Scriptets egen,
+	detaljerte logg ligger i ~/Library/Logs/bokhylla-audible-export.log.
+	-->
+	<key>StandardOutPath</key>
+	<string>REPLACE_WITH_YOUR_HOME/Library/Logs/bokhylla-audible-export-launchd.log</string>
+
+	<key>StandardErrorPath</key>
+	<string>REPLACE_WITH_YOUR_HOME/Library/Logs/bokhylla-audible-export-launchd.log</string>
+</dict>
+</plist>

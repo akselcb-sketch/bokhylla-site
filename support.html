@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hjelp og kontakt – Bokhylla</title>
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="icon.png" alt="Bokhylla-ikonet">
+    <h1>Hjelp og kontakt</h1>
+    <p class="tagline">Svar på det folk lurer mest på – og hvordan du når oss.</p>
+  </header>
+
+  <div class="card">
+    <h2>Kontakt</h2>
+    <p>Finner du en feil, eller har du et spørsmål eller et ønske? Skriv til
+      <a href="mailto:akselcb@gmail.com?subject=Bokhylla">akselcb@gmail.com</a>. Vi svarer så fort vi kan.</p>
+  </div>
+
+  <div class="card">
+    <h2>Vanlige spørsmål</h2>
+
+    <h3>Hvordan får jeg Audible-biblioteket inn i Bokhylla?</h3>
+    <p>Audible har ingen eksportknapp selv, så eksporten lages med det frie verktøyet
+      <a href="https://github.com/mkb79/audible-cli">audible-cli</a> på en Mac. Du kan gjøre det én gang
+      for hånd, eller la Macen gjøre det automatisk hver morgen:</p>
+    <ul>
+      <li><strong>Én gang:</strong> kjør <code>audible library export --format tsv --output audible-library.tsv</code>
+        i Terminal, send filen til iPhonen (AirDrop eller iCloud Drive), og åpne den i Bokhylla under
+        Innstillinger → Audible → «Importer fil …».</li>
+      <li><strong>Automatisk hver dag:</strong> følg <a href="mac.html">oppskriften for Macen</a>, og velg
+        mappen under Innstillinger → Audible → «Velg mappe i iCloud Drive …».</li>
+    </ul>
+
+    <h3>Hvordan importerer jeg fra Goodreads?</h3>
+    <p>På goodreads.com: My Books → Import and export → Export Library. Åpne CSV-filen i Bokhylla under
+      Innstillinger → Goodreads → «Importer fra Goodreads …». Du går gjennom treffene før noe lagres.</p>
+
+    <h3>Hvordan legger jeg til en papirbok?</h3>
+    <p>Trykk «+» i Bibliotek og velg «Skann ISBN», «Ta bilde av omslaget», «Skriv inn ISBN» eller
+      «Legg til manuelt». Bokhylla slår opp tittel, forfatter og omslag for deg.</p>
+
+    <h3>Kan jeg bruke Bokhylla uten Audible og Goodreads?</h3>
+    <p>Ja. Alt kan legges til for hånd eller ved å skanne bøkene. Importene er bare en snarvei.</p>
+
+    <h3>Hvordan får jeg biblioteket på flere iPhoner?</h3>
+    <p>Logg inn med samme Apple-konto og iCloud på telefonene. Bokhylla synker via din egen private iCloud,
+      og bøker som finnes på begge slås sammen av seg selv.</p>
+
+    <h3>Jeg har mistet bøker – kan jeg få dem tilbake?</h3>
+    <p>Bokhylla tar automatisk sikkerhetskopi på telefonen hver dag. Gå til Innstillinger → Sikkerhetskopi →
+      «Hent tilbake fra sikkerhetskopi …». Ingenting slettes når du henter tilbake. Du kan også lagre en kopi
+      i Filer med «Eksporter sikkerhetskopi …».</p>
+
+    <h3>Hvordan legger jeg til widgeten?</h3>
+    <p>Hold fingeren på hjemskjermen, trykk «Rediger» → «Legg til widget» og velg Bokhylla. Widgeten viser
+      det du leser nå og neste bok i en liste du velger.</p>
+
+    <h3>Koster Bokhylla noe?</h3>
+    <p>Nei. Appen er gratis, uten reklame og uten kjøp i appen.</p>
+  </div>
+
+  <a class="back" href="index.html">← Tilbake</a>
+  <footer>
+    Bokhylla utvikles av Helge Johannessen Bjørland.<br>
+    Bokhylla er ikke tilknyttet Audible, Amazon eller Goodreads.
+  </footer>
+</div>
+</body>
+</html>
